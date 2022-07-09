@@ -25,12 +25,7 @@ class HomeViewModel @Inject constructor(
     var state by mutableStateOf(HomeState())
         private set
 
-    init {
-        initDrinkType()
-        initData()
-    }
-
-    private fun initDrinkType() {
+    fun initDrinkType() {
         val totalAmount = SharedPrefHelper.readInt(SharedPrefHelper.PREF_DAILY_GOAL, 2700)
         state = state.copy(
             drinkTypes = DrinkTypeData.getData(),
@@ -38,7 +33,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun initData() {
+    fun initData() {
         viewModelScope.launch {
             val date = DateFormatter.formatDate(Date()) ?: Date()
             Log.i(HomeViewModel::class.simpleName, "initData: $date")
