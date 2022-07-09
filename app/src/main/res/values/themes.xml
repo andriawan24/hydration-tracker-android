@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.HydrationTracker.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/background_color</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/Theme.HydrationTracker</item>
+    </style>
+    <style name="Theme.HydrationTracker" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor" >@color/background_color</item>
+    </style>
+</resources>
