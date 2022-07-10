@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
@@ -52,7 +53,12 @@ fun DialogEditValue(
             }
         },
         dismissButton = {
-            Button(onClick = { onDismiss() }) {
+            Button(
+                onClick = { onDismiss() },
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Red
+                )
+            ) {
                 Text(text = "Cancel")
             }
         }

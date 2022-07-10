@@ -1,6 +1,9 @@
 package com.andriawan.hydrationtracker.utils
 
+import android.util.Log
+import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeParseException
 import java.util.*
 
 object DateFormatter {
@@ -14,6 +17,18 @@ object DateFormatter {
         } catch (e: Exception) {
             e.printStackTrace()
             null
+        }
+    }
+
+    fun formatDateToString(date: Date): String {
+        return try {
+            val simpleDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+            val resultString = simpleDateFormat.format(date)
+
+            resultString
+        } catch (e: Exception) {
+            Log.e(DateFormatter::class.simpleName, "formatDateToString: ${e.localizedMessage}")
+            "Invalid date format!"
         }
     }
 }

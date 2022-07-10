@@ -19,6 +19,10 @@ class DailyHistoryRepository @Inject constructor(
         }
     }
 
+    suspend fun getHistories(): List<DailyHistory> {
+        return dailyHistoryDao.getAllHistories()
+    }
+
     suspend fun createHistory(dailyHistory: DailyHistory) {
         try {
             dailyHistoryDao.createOrUpdateDrinkHistory(dailyHistory)

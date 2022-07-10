@@ -47,6 +47,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun addWater(amount: Int) {
+        if (state.history == null) {
+            initData()
+        }
+
         viewModelScope.launch {
             state.history?.let {
                 dailyHistoryRepository.createHistory(it.copy(totalAmount = it.totalAmount + amount))
@@ -56,6 +60,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun reduceWater(amount: Int) {
+        if (state.history == null) {
+            initData()
+        }
+
         viewModelScope.launch {
             initData()
             state.history?.let {

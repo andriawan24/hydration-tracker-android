@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.andriawan.hydrationtracker.ui.screens.HistoryScreen
+import com.andriawan.hydrationtracker.ui.screens.history.HistoryScreen
 import com.andriawan.hydrationtracker.ui.screens.home.HomeScreen
 import com.andriawan.hydrationtracker.ui.screens.settings.SettingsScreen
 import com.andriawan.hydrationtracker.utils.navigation.Routes
