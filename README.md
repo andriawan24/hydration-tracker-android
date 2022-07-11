@@ -26,6 +26,13 @@ The structure module used follows the guidelines of a clean architecture by divi
 
 <img src="https://raw.github.com/andriawan24/hydration-tracker/master/screenshots/screen.gif" width="300" />
 
+## TODO
+- [ ] Create bottom sheet for another options
+- [ ] Make options dynamic
+- [ ] User management using firebase
+- [ ] Find best practice for unit testing
+- [ ] Compose code refactor
+
 ## Contributing
 
 Please contribute! I'm just getting my hands dirty with Jetpack Compose.
