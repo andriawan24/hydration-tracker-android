@@ -24,7 +24,7 @@ fun HistoryItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 18.dp),
+            .padding(horizontal = 18.dp, vertical = 8.dp),
         elevation = 2.dp,
         shape = MaterialTheme.shapes.medium,
         backgroundColor = Color.White

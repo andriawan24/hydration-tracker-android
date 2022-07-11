@@ -2,6 +2,8 @@ package com.andriawan.hydrationtracker.ui.screens.history
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -50,11 +52,20 @@ fun HistoryScreen(
     ) {
         HistoryPageTopBar()
 
-        state.histories?.forEach {
-            HistoryItem(
-                date = DateFormatter.formatDateToString(it.date),
-                value = it.totalAmount.toString()
-            )
+        state.histories?.let { histories ->
+            LazyColumn {
+                items(
+                    items = histories,
+                    key = {
+                        it.id ?: 0
+                    }
+                ) {
+                    HistoryItem(
+                        date = DateFormatter.formatDateToString(it.date),
+                        value = it.totalAmount.toString()
+                    )
+                }
+            }
         }
     }
 }

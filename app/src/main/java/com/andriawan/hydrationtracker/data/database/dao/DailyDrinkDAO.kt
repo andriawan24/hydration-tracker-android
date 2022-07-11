@@ -10,7 +10,7 @@ interface DailyDrinkDAO {
     @Query("SELECT * FROM DailyHistory WHERE date = :date")
     suspend fun getHistoryByDate(date: Date): DailyHistory
 
-    @Query("SELECT * FROM DailyHistory")
+    @Query("SELECT * FROM DailyHistory ORDER BY date DESC")
     suspend fun getAllHistories(): List<DailyHistory>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
