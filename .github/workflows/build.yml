@@ -31,6 +31,7 @@ jobs:
         run: ./gradlew test
 
   instrumentation-test:
+    needs: [unit-test]
     runs-on: macos-latest
     steps:
       - name: Checkout the code
