@@ -2,7 +2,7 @@ ext {
     versions = [
             minSdkVersion               : 21,
             compileSdkVersion           : 32,
-            targetSdkVersion            : 21,
+            targetSdkVersion            : 32,
             versionCode                 : 1,
             versionName                 : '1.0',
             coreKtxVersion              : '1.8.0',
