@@ -62,7 +62,7 @@ jobs:
           java-version: 1.8
 
       - name: Build debug APK
-       run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
