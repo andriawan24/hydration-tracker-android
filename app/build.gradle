@@ -5,6 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootProject.projectDir/scripts/quality/dokka.gradle"
+
 android {
     compileSdk versions.compileSdkVersion
 

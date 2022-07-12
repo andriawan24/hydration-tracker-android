@@ -1,0 +1,5 @@
+apply plugin: 'org.jetbrains.dokka'
+
+dokkaHtml {
+    outputDirectory.set(file("$rootProject.projectDir/reports/javadoc"))
+}
