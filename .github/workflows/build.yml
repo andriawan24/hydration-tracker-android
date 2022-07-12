@@ -50,7 +50,6 @@ jobs:
 
   generate-apk:
     needs: [instrumentation-test]
-    name: Generate APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
