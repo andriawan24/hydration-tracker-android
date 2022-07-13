@@ -5,15 +5,17 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+apply from: "$rootProject.projectDir/scripts/quality/dokka.gradle"
+
 android {
-    compileSdk 32
+    compileSdk versions.compileSdkVersion
 
     defaultConfig {
         applicationId "com.andriawan.hydrationtracker"
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        minSdk versions.minSdkVersion
+        targetSdk versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName versions.versionName
 
         testInstrumentationRunner "com.andriawan.hydrationtracker.HiltTestRunner"
     }
@@ -31,7 +33,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion versions.composeVersion
     }
 
     buildFeatures {
@@ -44,63 +46,32 @@ android {
 }
 
 dependencies {
+    implementation libraries.coreKtx
+    implementation libraries.appCompat
+    implementation libraries.material
+    implementation libraries.constraintLayout
+    implementation libraries.lifecycle
+    implementation libraries.compose
+    implementation libraries.composeNavigation
+    implementation libraries.systemUiController
+    implementation libraries.splashScreen
+    implementation libraries.room
+    implementation libraries.hilt
+    implementation libraries.workManager
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.0"
-
-    // Compose
-    implementation "androidx.compose.runtime:runtime:$compose_version"
-    implementation "androidx.activity:activity-compose:1.5.0"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.foundation:foundation:$compose_version"
-    implementation "androidx.compose.foundation:foundation-layout:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation "com.google.android.material:compose-theme-adapter:1.1.13"
-    implementation "androidx.navigation:navigation-compose:2.5.0"
-
-    // System bar color
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
-
-    // Splash Screen
-    implementation "androidx.core:core-splashscreen:1.0.0-rc01"
-
-    // Room database
-    implementation "androidx.room:room-runtime:2.4.2"
-    kapt "androidx.room:room-compiler:2.4.2"
-    implementation "androidx.room:room-ktx:2.4.2"
-
-    // Lifecycle
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
-
-    // Hilt
-    implementation "com.google.dagger:hilt-android:2.41"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
-    implementation 'androidx.hilt:hilt-work:1.0.0'
-    kapt "com.google.dagger:hilt-compiler:2.41"
-    kapt 'com.google.dagger:hilt-android-compiler:2.41'
-
-    // Work Manager
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    // Annotation Processor
+    kapt annotationProcessors.hiltCompiler
+    kapt annotationProcessors.roomCompiler
 
     // Testing
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation "com.google.truth:truth:1.1"
-
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "com.google.truth:truth:1.1"
-    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.41'
-    androidTestImplementation "android.arch.core:core-testing:1.1.1"
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.41'
-
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    testImplementation testLibraries.jUnit
+    testImplementation testLibraries.truth
+    androidTestImplementation testLibraries.jUnit
+    androidTestImplementation testLibraries.espresso
+    androidTestImplementation testLibraries.truth
+    androidTestImplementation testLibraries.coreTesting
+    androidTestImplementation testLibraries.coroutinesTesting
+    androidTestImplementation testLibraries.hiltTesting
+    androidTestImplementation testLibraries.runnerTesting
+    kaptAndroidTest annotationProcessors.hiltCompiler
 }
