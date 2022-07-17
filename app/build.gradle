@@ -63,6 +63,10 @@ dependencies {
     kapt annotationProcessors.hiltCompiler
     kapt annotationProcessors.roomCompiler
 
+    // Firebase
+    implementation platform(libraries.firebaseBOM)
+    implementation libraries.firebaseAnalytics
+
     // Testing
     testImplementation testLibraries.jUnit
     testImplementation testLibraries.truth
@@ -75,3 +79,5 @@ dependencies {
     androidTestImplementation testLibraries.runnerTesting
     kaptAndroidTest annotationProcessors.hiltCompiler
 }
+
+apply plugin: 'com.google.gms.google-services'

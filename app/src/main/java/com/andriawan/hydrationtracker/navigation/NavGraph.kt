@@ -1,5 +1,6 @@
 package com.andriawan.hydrationtracker.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -9,6 +10,7 @@ import com.andriawan.hydrationtracker.ui.screens.home.HomeScreen
 import com.andriawan.hydrationtracker.ui.screens.settings.SettingsScreen
 import com.andriawan.hydrationtracker.utils.navigation.Routes
 
+@ExperimentalMaterialApi
 @Composable
 fun AppNavGraph(
     navController: NavHostController

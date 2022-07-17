@@ -2,7 +2,7 @@ package com.andriawan.hydrationtracker.di
 
 import androidx.work.WorkerFactory
 import com.andriawan.hydrationtracker.data.repository.DailyHistoryRepository
-import com.andriawan.hydrationtracker.utils.CustomWorkerFactory
+import com.andriawan.hydrationtracker.utils.worker.CustomWorkerFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

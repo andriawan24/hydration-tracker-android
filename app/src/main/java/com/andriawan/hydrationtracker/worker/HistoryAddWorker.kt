@@ -3,12 +3,11 @@ package com.andriawan.hydrationtracker.worker
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
-import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.andriawan.hydrationtracker.data.models.DailyHistory
 import com.andriawan.hydrationtracker.data.repository.DailyHistoryRepository
 import com.andriawan.hydrationtracker.utils.DateFormatter
-import com.andriawan.hydrationtracker.utils.WorkerHelper
+import com.andriawan.hydrationtracker.utils.worker.WorkerHelper
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
