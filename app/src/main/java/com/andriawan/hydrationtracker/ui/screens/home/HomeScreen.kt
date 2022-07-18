@@ -3,6 +3,9 @@ package com.andriawan.hydrationtracker.ui.screens.home
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -64,20 +67,51 @@ fun HomeScreen(
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
+        sheetShape = MaterialTheme.shapes.medium.copy(
+            bottomStart = CornerSize(0.dp),
+            bottomEnd = CornerSize(0.dp)
+        ),
         sheetContent = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White)
-                    .padding(12.dp)
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text(text = "Bottom Sheet 1")
+                BottomSheetContent(
+                    drinkTypes = state.drinkTypes.orEmpty(),
+                    onOptionClicked = {
+                        viewModel.addWater(it.amount)
+                        scope.launch {
+                            analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                                param(ANALYTICS_ADD_WATER, it.amount.toString())
+                            }
+
+                            bottomSheetState.hide()
+                            snackBarHostState.currentSnackbarData?.dismiss()
+                            val snackbarResult = snackBarHostState.showSnackbar(
+                                message = context.getString(R.string.water_added, it.name),
+                                duration = SnackbarDuration.Short,
+                                actionLabel = context.getString(R.string.undo)
+                            )
+
+                            when (snackbarResult) {
+                                SnackbarResult.ActionPerformed -> {
+                                    analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+                                        param(ANALYTICS_REDUCE_WATER, it.amount.toString())
+                                    }
+                                    viewModel.reduceWater(it.amount)
+                                }
+                                SnackbarResult.Dismissed -> {
+                                    snackBarHostState.currentSnackbarData?.dismiss()
+                                }
+                            }
+                        }
+                    }
+                )
             }
-        },
-        sheetShape = MaterialTheme.shapes.small.copy(
-            bottomStart = CornerSize(0.dp),
-            bottomEnd = CornerSize(0.dp)
-        )
+        }
     ) {
         MainScreen(
             onOptionClicked = {
@@ -99,7 +133,6 @@ fun HomeScreen(
                             analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
                                 param(ANALYTICS_REDUCE_WATER, it.amount.toString())
                             }
-
                             viewModel.reduceWater(it.amount)
                         }
                         SnackbarResult.Dismissed -> {
@@ -120,6 +153,33 @@ fun HomeScreen(
             state = state,
             snackBarHostState = snackBarHostState
         )
+    }
+}
+
+@Composable
+fun BottomSheetContent(
+    drinkTypes: List<DrinkType>,
+    onOptionClicked: (DrinkType) -> Unit
+) {
+    Text(text = stringResource(R.string.all_option))
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(count = 4),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(
+            items = drinkTypes,
+            key = {
+                it.name
+            }
+        ) {
+            OptionCard(
+                onCardClicked = { onOptionClicked(it) },
+                title = it.name,
+                icon = it.icon,
+                type = OptionType.COMMON_OPTION,
+                modifier = Modifier.height(75.dp)
+            )
+        }
     }
 }
 
@@ -172,7 +232,7 @@ fun MainScreen(
             Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
                 CustomSnackbar(snackbarHostState = snackBarHostState)
                 OptionList(
-                    drinkTypes = state.drinkTypes,
+                    drinkTypes = state.drinkTypes?.take(3),
                     onOptionClicked = {
                         onOptionClicked(it)
                     },
