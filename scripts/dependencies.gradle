@@ -27,22 +27,23 @@ ext {
             espressoVersion             : '3.4.0',
             coreTestingVersion          : '2.1.0',
             coroutinesTestingVersion    : '1.6.1',
-            runnerVersion               : '1.4.0'
+            runnerVersion               : '1.4.0',
+            firebaseVersion             : '30.2.0'
     ]
 
     libraries = [
             /**
              * Android Common Libraries
              */
-            appCompat                : "androidx.appcompat:appcompat:${versions.appCompatVersion}",
-            coreKtx                  : "androidx.core:core-ktx:${versions.coreKtxVersion}",
-            material                 : "com.google.android.material:material:${versions.materialVersion}",
-            constraintLayout         : "androidx.constraintlayout:constraintlayout:${versions.constraintLayoutVersion}",
+            appCompat         : "androidx.appcompat:appcompat:${versions.appCompatVersion}",
+            coreKtx           : "androidx.core:core-ktx:${versions.coreKtxVersion}",
+            material          : "com.google.android.material:material:${versions.materialVersion}",
+            constraintLayout  : "androidx.constraintlayout:constraintlayout:${versions.constraintLayoutVersion}",
 
             /**
              * Lifecycle
              */
-            lifecycle                : [
+            lifecycle         : [
                     "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycleVersion}",
                     "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycleVersion}"
             ],
@@ -50,7 +51,7 @@ ext {
             /**
              * Compose libraries
              */
-            compose                  : [
+            compose           : [
                     "androidx.compose.runtime:runtime:${versions.composeVersion}",
                     "androidx.activity:activity-compose:${versions.activityComposeVersion}",
                     "androidx.compose.ui:ui:${versions.composeVersion}",
@@ -65,7 +66,7 @@ ext {
             /**
              * Navigation Component
              */
-            composeNavigation        : "androidx.navigation:navigation-compose:${versions.navigationComposeVersion}",
+            composeNavigation : "androidx.navigation:navigation-compose:${versions.navigationComposeVersion}",
 
             /**
              * Accompanist Libraries
@@ -75,12 +76,12 @@ ext {
             /**
              * Splash Screen API
              */
-            splashScreen             : "androidx.core:core-splashscreen:${versions.splashScreenVersion}",
+            splashScreen      : "androidx.core:core-splashscreen:${versions.splashScreenVersion}",
 
             /**
              * Room database
              */
-            room                     : [
+            room              : [
                     "androidx.room:room-runtime:${versions.roomVersion}",
                     "androidx.room:room-ktx:${versions.roomVersion}"
             ],
@@ -88,7 +89,7 @@ ext {
             /**
              * Dagger Hilt
              */
-            hilt                     : [
+            hilt              : [
                     "com.google.dagger:hilt-android:${versions.hiltVersion}",
                     "androidx.hilt:hilt-navigation-compose:${versions.hiltNavigationComposeVersion}",
                     "androidx.hilt:hilt-work:${versions.hiltWorkVersion}",
@@ -97,7 +98,13 @@ ext {
             /**
              * Work Manager
              */
-            workManager              : "androidx.work:work-runtime-ktx:${versions.workManagerVersion}"
+            workManager       : "androidx.work:work-runtime-ktx:${versions.workManagerVersion}",
+
+            /**
+             * Firebase
+             */
+            firebaseBOM       : "com.google.firebase:firebase-bom:${versions.firebaseVersion}",
+            firebaseAnalytics : 'com.google.firebase:firebase-analytics-ktx'
     ]
 
     annotationProcessors =

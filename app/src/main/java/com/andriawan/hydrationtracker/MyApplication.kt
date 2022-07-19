@@ -5,6 +5,8 @@ import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
 import com.andriawan.hydrationtracker.utils.SharedPrefHelper
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -24,5 +26,6 @@ class MyApplication: Application(), Configuration.Provider {
         super.onCreate()
         SharedPrefHelper.initialize(this)
         WorkManager.initialize(this, workManagerConfiguration)
+        Firebase.initialize(this)
     }
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "888672293656",
+    "project_id": "hydration-tracker-e9c52",
+    "storage_bucket": "hydration-tracker-e9c52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888672293656:android:9a7dd333525c567e1f046d",
+        "android_client_info": {
+          "package_name": "com.andriawan.hydrationtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888672293656-sklrj400mgerf9psglnq0rnj9su0psd6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.andriawan.hydrationtracker",
+            "certificate_hash": "1b28a3fa95ebe1fb9bd413bf69ee63c3f6e43850"
+          }
+        },
+        {
+          "client_id": "888672293656-59uaeba7cd8bnmm76utn4ob84oasf5m4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSlFoA4MfqPuPnr-De5kJ7rLX0djg0RVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888672293656-59uaeba7cd8bnmm76utn4ob84oasf5m4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
