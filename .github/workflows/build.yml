@@ -61,7 +61,7 @@ jobs:
           path: app/build/reports/androidTests/connected/
 
   code-smell:
-    needs: [instrumenration-test]
+    needs: [instrumentation-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
