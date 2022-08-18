@@ -3,11 +3,12 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'jacoco'
     id 'com.github.ben-manes.versions'
 }
 
 apply from: "$rootProject.projectDir/scripts/quality/dokka.gradle"
+apply from: "$rootProject.projectDir/scripts/quality/jacoco.gradle"
+apply from: "$rootProject.projectDir/scripts/quality/sonar.gradle"
 
 android {
     compileSdk versions.compileSdkVersion
@@ -22,22 +23,17 @@ android {
         testInstrumentationRunner "com.andriawan.hydrationtracker.HiltTestRunner"
     }
 
-    testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
-        unitTests.returnDefaultValues = true
-    }
-
     buildTypes {
         debug {
             testCoverageEnabled true
+            debuggable true
+            minifyEnabled false
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,7 +44,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions.composeVersion
+        kotlinCompilerExtensionVersion '1.1.1'
     }
 
     buildFeatures {
@@ -57,6 +53,15 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -93,35 +98,6 @@ dependencies {
     androidTestImplementation testLibraries.hiltTesting
     androidTestImplementation testLibraries.runnerTesting
     kaptAndroidTest annotationProcessors.hiltCompiler
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
-    reports {
-        xml.setEnabled(true)
-        html.setEnabled(true)
-    }
-
-    def fileFilter = [
-            '**/R.class',
-            '**/R$*.class',
-            '**/BuildConfig.*',
-            '**/Manifest*.*',
-            '**/*Test*.*',
-            'android/**/*.*',
-            '**/*_MembersInjector.class',
-            '**/Dagger*Component.class', // covers component implementations
-            '**/Dagger*Component$Builder.class', // covers component builders
-            '**/*Module_*Factory.class'
-    ]
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.setFrom(files([mainSrc]))
-    classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ]))
 }
 
 def isNonStable = { String version ->

@@ -1,0 +1,20 @@
+apply plugin: 'org.sonarqube'
+
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.links.scm", "https://github.com/andriawan24/hydration-tracker"
+        property "sonar.links.issue", "https://github.com/andriawan24/hydration-tracker/issues"
+        property "sonar.login", "ae1832b9d0d081deb2b9d6df30ff5dbe7a21b931"
+        property "sonar.organization", "andriawan24"
+        property "sonar.projectName", "hydration-tracker"
+        property "sonar.projectKey", "andriawan24_hydration-tracker"
+        property "sonar.projectVersion", "1.0.0"
+        property "sonar.sourceEncoding", "UTF-8"
+
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/coverage/androidTest/debug/report.xml"
+        // taken from `jacoco.gradle`
+        property "sonar.coverage.exclusions", "**/test/**,**/androidTest/**,**/R.class,**/BuildConfig.*,**/Manifest*.*,**/*Test*.*,**/com/example/databinding/*,**/com/example/generated/callback/*,**/*Dto*.*,**/android/databinding/*,**/androidx/databinding/*,**/di/module/*,**/*MapperImpl*.*,**/BuildConfig.*,**/*Component*.*,**/*BR*.*,**/Manifest*.*,**/*Companion*.*,**/*Module.*,**/*Dagger*.*,**/*MembersInjector*.*,**/*Extensions*.*,**/InputMethodManagerLeaks.*,**/*_Factory*.*,**/*_Provide*Factory*.*"
+    }
+}
