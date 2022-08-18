@@ -71,6 +71,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: Create local properties
+        run: echo sonar_token="$LOGIN_TOKEN" > ./local.properties
+        env:
+          LOGIN_TOKEN: ${{ secrets.LOGIN_TOKEN }}
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:

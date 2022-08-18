@@ -5,7 +5,12 @@ sonarqube {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.links.scm", "https://github.com/andriawan24/hydration-tracker"
         property "sonar.links.issue", "https://github.com/andriawan24/hydration-tracker/issues"
-        property "sonar.login", "ae1832b9d0d081deb2b9d6df30ff5dbe7a21b931"
+
+        def props = Properties()
+        file('local.properties').withInputStream {
+            props.load(it)
+        }
+        property "sonar.login", props['sonar_token']
         property "sonar.organization", "andriawan24"
         property "sonar.projectName", "hydration-tracker"
         property "sonar.projectKey", "andriawan24_hydration-tracker"
