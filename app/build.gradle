@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'jacoco'
+    id 'com.github.ben-manes.versions'
 }
 
 apply from: "$rootProject.projectDir/scripts/quality/dokka.gradle"
@@ -20,7 +22,20 @@ android {
         testInstrumentationRunner "com.andriawan.hydrationtracker.HiltTestRunner"
     }
 
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
+    }
+
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -78,6 +93,58 @@ dependencies {
     androidTestImplementation testLibraries.hiltTesting
     androidTestImplementation testLibraries.runnerTesting
     kaptAndroidTest annotationProcessors.hiltCompiler
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    reports {
+        xml.setEnabled(true)
+        html.setEnabled(true)
+    }
+
+    def fileFilter = [
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*Test*.*',
+            'android/**/*.*',
+            '**/*_MembersInjector.class',
+            '**/Dagger*Component.class', // covers component implementations
+            '**/Dagger*Component$Builder.class', // covers component builders
+            '**/*Module_*Factory.class'
+    ]
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
+}
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    checkForGradleUpdate = true
+    outputFormatter = "html,json,plain,xml,Closure"
+    outputDir = "build/dependencyUpdates"
+    reportfileName = "updateDependencyReport"
+
+    resolutionStrategy {
+        componentSelection {
+            all {
+                if (isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)) {
+                    reject('Release candidate')
+                }
+            }
+        }
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'
