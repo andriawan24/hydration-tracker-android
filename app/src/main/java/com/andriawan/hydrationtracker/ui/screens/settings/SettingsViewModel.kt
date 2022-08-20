@@ -9,17 +9,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(): ViewModel() {
+class SettingsViewModel @Inject constructor() : ViewModel() {
 
     var state by mutableStateOf(SettingsState())
-    private set
+        private set
 
     init {
         initData()
     }
 
     private fun initData() {
-        val dailyGoals = SharedPrefHelper.readInt(SharedPrefHelper.PREF_DAILY_GOAL, 0)
+        val dailyGoals = SharedPrefHelper.readInt(
+            SharedPrefHelper.PREF_DAILY_GOAL,
+            SharedPrefHelper.DEFAULT_DAILY_GOAL
+        )
+
         state = state.copy(
             dailyGoals = dailyGoals
         )
