@@ -3,9 +3,12 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.github.ben-manes.versions'
 }
 
 apply from: "$rootProject.projectDir/scripts/quality/dokka.gradle"
+apply from: "$rootProject.projectDir/scripts/quality/jacoco.gradle"
+apply from: "$rootProject.projectDir/scripts/quality/sonar.gradle"
 
 android {
     compileSdk versions.compileSdkVersion
@@ -21,8 +24,16 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            testCoverageEnabled true
+            debuggable true
             minifyEnabled false
+        }
+
+        release {
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -33,7 +44,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion versions.composeVersion
+        kotlinCompilerExtensionVersion '1.1.1'
     }
 
     buildFeatures {
@@ -42,6 +53,15 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
     }
 }
 
@@ -78,6 +98,29 @@ dependencies {
     androidTestImplementation testLibraries.hiltTesting
     androidTestImplementation testLibraries.runnerTesting
     kaptAndroidTest annotationProcessors.hiltCompiler
+}
+
+def isNonStable = { String version ->
+    def stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+    def regex = /^[0-9,.v-]+(-r)?$/
+    return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+    checkForGradleUpdate = true
+    outputFormatter = "html,json,plain,xml,Closure"
+    outputDir = "build/dependencyUpdates"
+    reportfileName = "updateDependencyReport"
+
+    resolutionStrategy {
+        componentSelection {
+            all {
+                if (isNonStable(it.candidate.version) && !isNonStable(it.currentVersion)) {
+                    reject('Release candidate')
+                }
+            }
+        }
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'

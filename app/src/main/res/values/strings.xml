@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Hydration Tracker</string>
-
     <string name="daily_balance">Daily Balance</string>
     <string name="current_amount">%d ml out of %dml</string>
     <string name="water_added">%s Added</string>
