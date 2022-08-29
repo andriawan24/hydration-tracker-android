@@ -6,4 +6,8 @@
     <string name="undo">Undo</string>
     <string name="more_option">More</string>
     <string name="all_option">All Options</string>
+    <string name="application_settings">Application Settings</string>
+    <string name="settings_goal_amount">Goals Amount</string>
+    <string name="settings_edit_goal_amount">Edit Goals Amount</string>
+    <string name="settings">Settings</string>
 </resources>

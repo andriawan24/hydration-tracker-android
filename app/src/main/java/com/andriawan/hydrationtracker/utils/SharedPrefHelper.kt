@@ -9,6 +9,7 @@ object SharedPrefHelper {
 
     private const val PREF_NAME = "hydration-preferences"
     const val PREF_DAILY_GOAL = "daily_goal"
+    const val DEFAULT_DAILY_GOAL = 2700
 
     fun initialize(context: Context) {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
