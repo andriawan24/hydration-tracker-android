@@ -12,7 +12,6 @@ object DateFormatter {
         return try {
             val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val resultString = simpleDateFormat.format(date)
-
             simpleDateFormat.parse(resultString)
         } catch (e: Exception) {
             e.printStackTrace()

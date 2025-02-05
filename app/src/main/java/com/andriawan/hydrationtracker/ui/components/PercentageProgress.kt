@@ -43,7 +43,7 @@ fun PercentageProgress(
     // Create animation for the percentage progress
     val allowedIndicatorValue = if (value < maxValue) value else maxValue
     var animatedIndicatorValue by remember {
-        mutableStateOf(0F)
+        mutableFloatStateOf(0F)
     }
     LaunchedEffect(key1 = allowedIndicatorValue) {
         animatedIndicatorValue = allowedIndicatorValue.toFloat()
@@ -51,7 +51,8 @@ fun PercentageProgress(
     val percentageValue = (animatedIndicatorValue / maxValue) * 100
     val sweepAngleValue by animateFloatAsState(
         targetValue = (3.6 * percentageValue).toFloat(),
-        animationSpec = tween(1000)
+        animationSpec = tween(1000),
+        label = ""
     )
 
     // Create animation for text
@@ -59,7 +60,8 @@ fun PercentageProgress(
         targetValue = percentageValue.toInt(),
         animationSpec = tween(
             durationMillis = 1000
-        )
+        ),
+        label = ""
     )
 
     Column(

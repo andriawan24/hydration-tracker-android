@@ -48,7 +48,6 @@ fun WavesAnimationBox(
             }
         }
 
-        Log.i("Waves Shader", "Wave shader $waveShader")
         if (progress > 0 && waveShader != null) {
             WavesOnCanvas(
                 shader = waveShader!!,
@@ -87,7 +86,7 @@ private fun WavesOnCanvas(shader: Shader, progress: Float) {
 
 @Composable
 private fun rememberWavesTransition(): WavesTransition {
-    val transition = rememberInfiniteTransition()
+    val transition = rememberInfiniteTransition(label = "")
 
     val waveShiftRatio = transition.animateFloat(
         initialValue = 0F,
@@ -97,7 +96,8 @@ private fun rememberWavesTransition(): WavesTransition {
                 durationMillis = WavesShiftAnimationDurationInMillis,
                 easing = LinearEasing
             )
-        )
+        ),
+        label = ""
     )
 
     val amplitudeRatio = transition.animateFloat(
@@ -109,7 +109,8 @@ private fun rememberWavesTransition(): WavesTransition {
                 easing = FastOutLinearInEasing
             ),
             repeatMode = RepeatMode.Reverse
-        )
+        ),
+        label = ""
     )
 
     return remember(transition) {

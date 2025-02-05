@@ -1,7 +1,11 @@
 package com.andriawan.hydrationtracker.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.*
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -13,28 +17,17 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.andriawan.hydrationtracker.R
 import com.andriawan.hydrationtracker.theme.HydrationTrackerTheme
 import com.andriawan.hydrationtracker.theme.OnPrimaryColor
 import com.andriawan.hydrationtracker.utils.navigation.Routes
 
 @Composable
-fun AppBottomNav(
-    navController: NavHostController
-) {
-    val bottomNavList = listOf(
-        Routes.HistoryPage,
-        Routes.HomePage,
-        Routes.SettingsPage
-    )
-
+fun AppBottomNav(navController: NavHostController) {
+    val bottomNavList = listOf(Routes.HistoryPage, Routes.HomePage, Routes.SettingsPage)
     val navBackstackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackstackEntry?.destination?.route
 
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colors.primaryVariant,
-        elevation = 0.dp
-    ) {
+    BottomNavigation(backgroundColor = MaterialTheme.colors.primaryVariant, elevation = 0.dp) {
         bottomNavList.map {
             BottomNavigationItem(
                 selected = it.routeName == currentRoute,
@@ -65,9 +58,7 @@ fun AppBottomNav(
 fun AppBottomNavPreview() {
     HydrationTrackerTheme {
         Surface(modifier = Modifier.fillMaxWidth()) {
-            AppBottomNav(
-                navController = rememberNavController()
-            )
+            AppBottomNav(navController = rememberNavController())
         }
     }
 }

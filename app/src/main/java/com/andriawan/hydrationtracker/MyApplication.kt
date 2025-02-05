@@ -27,6 +27,5 @@ class MyApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         SharedPrefHelper.initialize(this)
-        WorkManager.initialize(this, workManagerConfiguration)
     }
 }

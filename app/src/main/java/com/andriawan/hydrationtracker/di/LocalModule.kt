@@ -21,9 +21,9 @@ object LocalModule {
         @ApplicationContext context: Context
     ): AppDatabase {
         return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            AppDatabase.DATABASE_NAME
+            context = context,
+            klass = AppDatabase::class.java,
+            name = AppDatabase.DATABASE_NAME
         ).build()
     }
 

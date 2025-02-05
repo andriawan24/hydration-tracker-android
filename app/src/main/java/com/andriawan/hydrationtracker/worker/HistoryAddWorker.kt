@@ -12,15 +12,14 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.Date
 
 @HiltWorker
 class HistoryAddWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
+    private val historyRepository: DailyHistoryRepository
 ) : CoroutineWorker(context, workerParams) {
-
-    lateinit var historyRepository: DailyHistoryRepository
 
     override suspend fun doWork(): Result {
         WorkerHelper.createHistoryDrinkWorker(
@@ -32,13 +31,8 @@ class HistoryAddWorker @AssistedInject constructor(
             withContext(Dispatchers.IO) {
                 val date = DateFormatter.formatDate(Date()) ?: Date()
                 val history = historyRepository.getHistory(date)
-
                 if (history == null) {
-                    val dailyHistory = DailyHistory(
-                        id = null,
-                        date = date,
-                        totalAmount = 0
-                    )
+                    val dailyHistory = DailyHistory(date = date.time)
                     historyRepository.createHistory(dailyHistory)
                 }
             }

@@ -27,16 +27,12 @@ class HomeViewModel @Inject constructor(
 
     fun initDrinkType() {
         val totalAmount = SharedPrefHelper.readInt(SharedPrefHelper.PREF_DAILY_GOAL, 2700)
-        state = state.copy(
-            drinkTypes = DrinkTypeData.getData(),
-            totalAmount = totalAmount
-        )
+        state = state.copy(drinkTypes = DrinkTypeData.getData(), totalAmount = totalAmount)
     }
 
     fun initData() {
         viewModelScope.launch {
             val date = DateFormatter.formatDate(Date()) ?: Date()
-            Log.i(HomeViewModel::class.simpleName, "initData: $date")
             dailyHistoryRepository.getHistory(date)?.let {
                 state = state.copy(
                     history = it,

@@ -34,8 +34,7 @@ fun OptionCard(
     textColor: Color = TestColor,
 ) {
     Card(
-        modifier = modifier
-            .clickable { onCardClicked() },
+        modifier = modifier.clickable { onCardClicked() },
         backgroundColor = backgroundColor,
         shape = MaterialTheme.shapes.medium,
     ) {

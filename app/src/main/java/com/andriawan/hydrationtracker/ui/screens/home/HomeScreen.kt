@@ -2,38 +2,62 @@ package com.andriawan.hydrationtracker.ui.screens.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.SnackbarResult
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.andriawan.hydrationtracker.R
 import com.andriawan.hydrationtracker.data.models.DrinkType
 import com.andriawan.hydrationtracker.theme.HydrationTrackerTheme
-import com.andriawan.hydrationtracker.ui.components.*
+import com.andriawan.hydrationtracker.ui.components.CustomSnackBar
+import com.andriawan.hydrationtracker.ui.components.OptionCard
+import com.andriawan.hydrationtracker.ui.components.OptionType
+import com.andriawan.hydrationtracker.ui.components.PercentageProgress
+import com.andriawan.hydrationtracker.ui.components.WavesAnimationBox
 import com.andriawan.hydrationtracker.utils.Constants.ANALYTICS_ADD_WATER
 import com.andriawan.hydrationtracker.utils.Constants.ANALYTICS_OTHER_OPTION
 import com.andriawan.hydrationtracker.utils.Constants.ANALYTICS_REDUCE_WATER
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 
 @ExperimentalMaterialApi
 @Composable
@@ -84,25 +108,27 @@ fun HomeScreen(
                     onOptionClicked = {
                         viewModel.addWater(it.amount)
                         scope.launch {
-                            analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                                param(ANALYTICS_ADD_WATER, it.amount.toString())
-                            }
-
+                            analytics.logEvent(
+                                FirebaseAnalytics.Event.SELECT_ITEM,
+                                bundleOf(ANALYTICS_ADD_WATER to it.amount.toString())
+                            )
                             bottomSheetState.hide()
                             snackBarHostState.currentSnackbarData?.dismiss()
-                            val snackbarResult = snackBarHostState.showSnackbar(
+                            val result = snackBarHostState.showSnackbar(
                                 message = context.getString(R.string.water_added, it.name),
                                 duration = SnackbarDuration.Short,
                                 actionLabel = context.getString(R.string.undo)
                             )
 
-                            when (snackbarResult) {
+                            when (result) {
                                 SnackbarResult.ActionPerformed -> {
-                                    analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                                        param(ANALYTICS_REDUCE_WATER, it.amount.toString())
-                                    }
+                                    analytics.logEvent(
+                                        FirebaseAnalytics.Event.SELECT_ITEM,
+                                        bundleOf(ANALYTICS_REDUCE_WATER to it.amount.toString())
+                                    )
                                     viewModel.reduceWater(it.amount)
                                 }
+
                                 SnackbarResult.Dismissed -> {
                                     snackBarHostState.currentSnackbarData?.dismiss()
                                 }
@@ -117,24 +143,27 @@ fun HomeScreen(
             onOptionClicked = {
                 viewModel.addWater(it.amount)
                 scope.launch {
-                    analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                        param(ANALYTICS_ADD_WATER, it.amount.toString())
-                    }
+                    analytics.logEvent(
+                        FirebaseAnalytics.Event.SELECT_ITEM,
+                        bundleOf(ANALYTICS_ADD_WATER to it.amount.toString())
+                    )
 
                     snackBarHostState.currentSnackbarData?.dismiss()
-                    val snackbarResult = snackBarHostState.showSnackbar(
+                    val result = snackBarHostState.showSnackbar(
                         message = context.getString(R.string.water_added, it.name),
                         duration = SnackbarDuration.Short,
                         actionLabel = context.getString(R.string.undo)
                     )
 
-                    when (snackbarResult) {
+                    when (result) {
                         SnackbarResult.ActionPerformed -> {
-                            analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                                param(ANALYTICS_REDUCE_WATER, it.amount.toString())
-                            }
+                            analytics.logEvent(
+                                FirebaseAnalytics.Event.SELECT_ITEM,
+                                bundleOf(ANALYTICS_REDUCE_WATER to it.amount.toString())
+                            )
                             viewModel.reduceWater(it.amount)
                         }
+
                         SnackbarResult.Dismissed -> {
                             snackBarHostState.currentSnackbarData?.dismiss()
                         }
@@ -142,9 +171,10 @@ fun HomeScreen(
                 }
             },
             onOtherOptionClicked = {
-                analytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-                    param(ANALYTICS_OTHER_OPTION, Date().toString())
-                }
+                analytics.logEvent(
+                    FirebaseAnalytics.Event.SELECT_ITEM,
+                    bundleOf(ANALYTICS_OTHER_OPTION to Date().toString())
+                )
 
                 scope.launch {
                     bottomSheetState.show()
@@ -230,7 +260,7 @@ fun MainScreen(
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                CustomSnackbar(snackbarHostState = snackBarHostState)
+                CustomSnackBar(state = snackBarHostState)
                 OptionList(
                     drinkTypes = state.drinkTypes?.take(3),
                     onOptionClicked = {

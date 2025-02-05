@@ -11,12 +11,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor(
-    private val historyRepository: DailyHistoryRepository
-): ViewModel() {
+class HistoryViewModel @Inject constructor(private val historyRepository: DailyHistoryRepository) : ViewModel() {
 
     var state by mutableStateOf(HistoryState())
-    private set
+        private set
 
     fun initData() {
         viewModelScope.launch {
