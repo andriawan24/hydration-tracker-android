@@ -1,0 +1,98 @@
+[versions]
+coreKtx = "1.15.0"
+appCompat = "1.7.0"
+googleServices = "4.4.2"
+material = "1.12.0"
+constraintLayout = "2.2.0"
+lifecycle = "2.8.7"
+compose = "1.7.7"
+activityCompose = "1.10.0"
+composeThemeAdapter = "1.2.1"
+navigationCompose = "2.8.6"
+systemUiController = "0.17.0"
+splashScreen = "1.0.1"
+room = "2.6.1"
+hilt = "2.51.1"
+ksp = "2.0.21-1.0.27"
+hiltNavigationCompose = "1.2.0"
+hiltWork = "1.2.0"
+workManager = "2.10.0"
+jUnit = "4.13.2"
+extJUnit = "1.2.1"
+truth = "1.1.3"
+espresso = "3.6.1"
+coreTesting = "2.2.0"
+coroutinesTesting = "1.9.0"
+runner = "1.6.2"
+firebase = "33.8.0"
+application = "8.6.1"
+kotlin = "2.0.21"
+dokka = "1.9.20"
+detekt = "1.10.0"
+
+[libraries]
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appCompat" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
+
+# Lifecycle
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+
+# Jetpack Compose
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose" }
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-uitooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
+compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+compose-themeadapter = { group = "com.google.android.material", name = "compose-theme-adapter", version.ref = "composeThemeAdapter" }
+
+# Navigation Component
+compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
+# Accompanist
+systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "systemUiController" }
+
+# Splash Screen
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashScreen" }
+
+# Room Database
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# Hilt (Dagger)
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+hilt-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltWork" }
+
+# WorkManager
+workmanager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workManager" }
+
+# Firebase
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "jUnit" }
+truth = { group = "com.google.truth", name = "truth", version.ref = "truth" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJUnit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
+coroutines-testing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTesting" }
+hilt-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+runner-testing = { group = "androidx.test", name = "runner", version.ref = "runner" }
+
+[plugins]
+application = { id = "com.android.application", version.ref = "application" }
+library = { id = "com.android.library", version.ref = "application" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

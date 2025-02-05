@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Hydration Tracker"
-include ':app'
+include(":app")
