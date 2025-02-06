@@ -35,8 +35,7 @@ fun HistoryItem(
         ) {
             Text(
                 text = date,
-                modifier = Modifier
-                    .weight(1F),
+                modifier = Modifier.weight(1F),
                 style = MaterialTheme.typography.h3
             )
 

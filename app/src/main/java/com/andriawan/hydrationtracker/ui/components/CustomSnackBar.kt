@@ -2,9 +2,20 @@ package com.andriawan.hydrationtracker.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,11 +29,9 @@ import com.andriawan.hydrationtracker.R
 import com.andriawan.hydrationtracker.theme.SecondaryColor
 
 @Composable
-fun CustomSnackbar(
-    snackbarHostState: SnackbarHostState
-) {
+fun CustomSnackBar(state: SnackbarHostState) {
     SnackbarHost(
-        hostState = snackbarHostState,
+        hostState = state,
         modifier = Modifier.clip(RoundedCornerShape(8.dp)),
         snackbar = {
             Column(
@@ -32,8 +41,7 @@ fun CustomSnackbar(
                 verticalArrangement = Arrangement.Center
             ) {
                 Row(
-                    modifier = Modifier
-                        .padding(vertical = 18.dp, horizontal = 20.dp),
+                    modifier = Modifier.padding(vertical = 18.dp, horizontal = 20.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
@@ -41,26 +49,20 @@ fun CustomSnackbar(
                         contentDescription = null,
                         modifier = Modifier.size(30.dp)
                     )
-
                     Spacer(modifier = Modifier.width(20.dp))
-
                     Text(
-                        text = it.message,
                         modifier = Modifier
                             .weight(2F)
                             .fillMaxWidth(),
-                        style = MaterialTheme.typography.h3.copy(
-                            fontWeight = FontWeight.Medium
-                        )
+                        text = it.message,
+                        style = MaterialTheme.typography.h3.copy(fontWeight = FontWeight.Medium)
                     )
 
                     it.actionLabel?.let { label ->
                         Text(
                             text = label,
                             modifier = Modifier
-                                .clickable {
-                                    it.performAction()
-                                }
+                                .clickable { it.performAction() }
                                 .weight(1F),
                             textDecoration = TextDecoration.Underline,
                             textAlign = TextAlign.End

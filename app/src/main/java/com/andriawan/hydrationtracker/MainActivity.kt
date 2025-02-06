@@ -5,11 +5,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import androidx.work.WorkManager
 import com.andriawan.hydrationtracker.navigation.AppNavGraph
@@ -18,7 +22,6 @@ import com.andriawan.hydrationtracker.ui.components.AppBottomNav
 import com.andriawan.hydrationtracker.utils.worker.WorkerHelper
 import com.andriawan.hydrationtracker.worker.HistoryAddWorker
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @ExperimentalMaterialApi
@@ -26,13 +29,15 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Installing Splash Screen
         installSplashScreen()
 
         setContent {
             HydrationTrackerTheme {
                 val navController = rememberNavController()
+
+                LaunchedEffect(true) {
+                    initDatabaseWorker()
+                }
 
                 Scaffold(
                     bottomBar = {
@@ -40,9 +45,7 @@ class MainActivity : ComponentActivity() {
                             backgroundColor = MaterialTheme.colors.primaryVariant,
                             elevation = 0.dp
                         ) {
-                            AppBottomNav(
-                                navController = navController
-                            )
+                            AppBottomNav(navController = navController)
                         }
                     },
                     content = {
@@ -56,10 +59,6 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             }
-        }
-
-        lifecycleScope.launch {
-            initDatabaseWorker()
         }
     }
 

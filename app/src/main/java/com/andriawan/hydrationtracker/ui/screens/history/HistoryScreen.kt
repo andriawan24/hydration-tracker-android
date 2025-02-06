@@ -21,6 +21,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.andriawan.hydrationtracker.theme.HydrationTrackerTheme
 import com.andriawan.hydrationtracker.ui.components.HistoryItem
 import com.andriawan.hydrationtracker.utils.DateFormatter
+import java.util.Date
 
 @Composable
 fun HistoryScreen(
@@ -61,7 +62,7 @@ fun HistoryScreen(
                     }
                 ) {
                     HistoryItem(
-                        date = DateFormatter.formatDateToString(it.date),
+                        date = DateFormatter.formatDateToString(Date(it.date)),
                         value = it.totalAmount.toString()
                     )
                 }
